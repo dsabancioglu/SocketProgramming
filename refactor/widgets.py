@@ -2,102 +2,15 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-import socket
+from client import Client
+from server import Server
 
 
 root = Tk()
 root.title("Client Server Communication")
 root.geometry('900x500+500+250')
 
-class Server:
-    def __init__(self):
-        self.ip_var = tk.StringVar()
-        self.port_var = tk.StringVar()
-        self.socket = socket.socket()
-        self.max_connection = 5
-        self.active = FALSE
-    
-    def bind(self,event):
-        ip = self.ip_var.get()
-        port = int(self.port_var.get())
-        print(port)
-        try:
-            self.socket.bind((ip, port))
-            print("Socket binded to %s port\n" %(port))
-            self.active = 1
-            server_status_value.config(text="Run",foreground="#278c3d")
-
-        except:
-            print ('\n\nBind failed') 
-            self.active = 0
-            self.status = "passive"
-            server_status_value.config(text="Stop", foreground="eb3838")
-
-        #listen port
-        if(self.active):
-            self.socket.listen(self.max_connection)
-            print("socket is listening\n")
-
-    def accept_connection(self): #waiting request from the client
-        self.c,self.addr = self.socket.accept()
-        print ('\nGot connection from', self.addr) 
-
-    def send_message_to_client(self,event):
-        message = send_client_entry.get('1.0','end')
-        self.c.send(message.encode())
-    
-    def get_message(self,event):
-        self.receivedMessage = self.c.recv(1024)
-        print(self.receivedMessage)
-        received_client_entry.insert("end", self.receivedMessage)
-
-    def close_connection(self):
-        self.c.close()
-        print("Connection closed")
-    
-    def delete_entry(self,event):
-        received_client_entry.delete('1.0', END)
-
 server = Server()
-
-#--------------------------------------------------------------------
-
-class Client:
-    def __init__(self):
-        self.ip_var = StringVar()
-        self.port_var = StringVar()
-        self.socket = socket.socket()
-
-    def get_connection(self,event):
-        ip = self.ip_var.get()
-        port= int(self.port_var.get())
-        
-        try:
-            self.socket.connect((ip, port))
-            print("\nconnection established")
-            connection_statement_value.config(text="Connected", foreground="#278c3d")
-            server.accept_connection()
-        except:
-            print("\nConnection could not be established" )
-            connection_statement_value.config(text="Not connected", foreground="eb3838")
-
-    def send_message_to_server(self,event):
-        message = send_server_entry.get('1.0','end').encode()
-        print(message)
-        self.socket.send(message)
-
-    def get_message(self,event):
-        self.receivedMessage = self.socket.recv(1024)
-        received_server_entry.insert(1.0,self.receivedMessage)
-
-    def close_connection(self):
-        self.socket.close()
-        print("closed")
-        
-    def delete_entry(self,event):
-        received_server_entry.delete('1.0', END)
-
-
 client = Client()
 
 #Server frame
@@ -128,7 +41,7 @@ listen_button.bind("<Button-1>", server.bind)
 
 server_status = ttk.Label(server_frame, text="Server Status:").grid(column=0,row=4, sticky=tk.W, padx=20,pady=20)
 server_status_value = ttk.Label(server_frame, text="Stop", foreground="red")
-server_status_value.grid(column=1,row=4, sticky=tk.EW, padx=20,pady=20) #listen buttonu nurayı triggerlicak
+server_status_value.grid(column=1,row=4, sticky=tk.EW, padx=20,pady=20) 
 
 received_client = ttk.Label(server_frame, text="Received message from client:").grid(column=0,row=5,sticky=tk.W, padx=20,pady=0)
 received_client_entry = tk.Text(server_frame ,width=20,height=3) 
@@ -167,7 +80,7 @@ client_port = ttk.Label(client_frame, text="Port:").grid(column=0, row=2, sticky
 client_port_entry = ttk.Entry(client_frame,textvariable=client.port_var).grid(column=1, row=2, sticky=tk.W, padx=20, pady=5)
 
 connect_button = tk.Button(client_frame, text="Connect Server",background="#54727a",foreground="white")
-connect_button.grid(column=1, row=3, sticky=tk.NS, padx=20, pady=5) #is active i triggerlaması lazım event bind edicez
+connect_button.grid(column=1, row=3, sticky=tk.NS, padx=20, pady=5) 
 connect_button.bind("<Button-1>", client.get_connection)
 
 connection_statement = ttk.Label(client_frame, text="Connection Statement:").grid(column=0,row=4, sticky=tk.W, padx=20,pady=20)
