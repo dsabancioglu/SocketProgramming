@@ -2,19 +2,20 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+
 from root import *
-# from main import client,server
+
 
 class ClientWidgets:
 
-    def __init__(self, client,server):
+    def __init__(self, server, client):
         #Client Frame
         self.client_frame = ttk.Frame(root)
         self.client_frame.columnconfigure(0, weight=1)
         self.client_frame.columnconfigure(1, weight=1)
         self.client_frame.pack(fill=BOTH, side=RIGHT , expand=True)
 
-        #CLIENT widgets
+        #Client widgets
         self.client_label = ttk.Label(self.client_frame, text="Client")
         self.client_label.grid(column=0, row=0, sticky=tk.E, padx=5 ,pady=5)
 
@@ -49,4 +50,4 @@ class ClientWidgets:
         self.delete_button_client.grid(column=1, row=10, sticky=E, pady=5, padx=20)
         self.delete_button_client.bind("<Button-1>", client.delete_entry)
 
-        self.widget_created = 1
+        

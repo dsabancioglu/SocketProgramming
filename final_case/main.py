@@ -1,14 +1,15 @@
 #pylint: skip-file
-from http import client
-from client import clientWidgets
-from server import serverWidgets
+from server import Server
+from client import Client
 from root import *
 
-root = Root()
 server = Server()
-client = Client(server) #client baglanacagi server objesini aldi
+client = Client(server) 
 
-if clientWidgets.widget_created == 1 and serverWidgets.widget_created ==1 :
+server.create_widgets(server, client)
+client.create_widgets(server, client)
+
+if client.created and server.created :
     root.mainloop()
 
 

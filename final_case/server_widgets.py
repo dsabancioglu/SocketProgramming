@@ -2,14 +2,13 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-from root import *
-#from main import client
 
-#server, client 
+from root import *
+
 
 class ServerWidgets:
 
-    def __init__(self, server):
+    def __init__(self, server, client):
         #Server Frame
         self.server_frame = ttk.Frame(root)
         self.server_frame.columnconfigure(0, weight=1)
@@ -32,7 +31,7 @@ class ServerWidgets:
 
         self.server_status = ttk.Label(self.server_frame, text="Server Status:").grid(column=0,row=4, sticky=tk.W, padx=20,pady=20)
         self.server_status_value = ttk.Label(self.server_frame, text="Stop", foreground="red")
-        self.server_status_value.grid(column=1,row=4, sticky=tk.EW, padx=20,pady=20) #listen buttonu nurayı triggerlicak
+        self.server_status_value.grid(column=1,row=4, sticky=tk.EW, padx=20,pady=20) 
 
         self.received_client = ttk.Label(self.server_frame, text="Received message from client:").grid(column=0,row=5,sticky=tk.W, padx=20,pady=0)
         self.received_client_entry = tk.Text(self.server_frame ,width=20,height=3) 
@@ -55,8 +54,8 @@ class ServerWidgets:
         self.send_button = tk.Button(self.server_frame, text="SEND", background="#278c3d", foreground="white")
         self.send_button.grid(column=1, row=10, sticky=E, pady=5, padx=20)
         self.send_button.bind("<Button-1>", server.send_message_to_client)
-        self.send_button.bind("<Button-1>", client.get_message, add='+') #clienti buradan kaldirirsan bağımlılık halledilir
+        self.send_button.bind("<Button-1>", client.get_message, add='+')
 
-        self.widget_created = 1
+        
 
 

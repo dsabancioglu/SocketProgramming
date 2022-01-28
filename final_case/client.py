@@ -1,19 +1,21 @@
 #pylint: skip-file
 from tkinter import *
-from tkinter import ttk
-import tkinter as tk
 import socket
-# from root import *
+
 from client_widgets import ClientWidgets
 
 
 class Client:
+
     def __init__(self, server):
-        self.clientWidgets = ClientWidgets(self, server) #send client object as parameter
         self.server_object = server
         self.ip_var = StringVar()
         self.port_var = StringVar()
         self.socket = socket.socket()
+
+    def create_widgets(self, server, client):
+        self.clientWidgets = ClientWidgets(server, client)  
+        self.created = 1
 
     def get_connection(self,event):
         ip = self.ip_var.get()
