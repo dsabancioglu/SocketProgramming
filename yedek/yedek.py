@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 import socket
-
+#all functions are working correctly
 
 root = Tk()
 root.title("Client Server Communication")
@@ -20,7 +20,7 @@ class Server:
     def bind(self,event):
         ip = self.ip_var.get()
         port = int(self.port_var.get())
-        print(port)
+        print(port, ip)
         try:
             self.socket.bind((ip, port))
             print("Socket binded to %s port\n" %(port))
@@ -79,7 +79,7 @@ class Client:
             server.accept_connection()
         except:
             print("\nConnection could not be established" )
-            connection_statement_value.config(text="Not connected", foreground="eb3838")
+            connection_statement_value.config(text="Not connected", foreground="#eb3838")
 
     def send_message_to_server(self,event):
         message = send_server_entry.get('1.0','end').encode()
@@ -135,9 +135,9 @@ received_client_entry = tk.Text(server_frame ,width=20,height=3)
 received_client_entry.grid(column=0 ,row=6 ,sticky= EW,padx=20,pady=5, columnspan=2)
 
 #scrollbar - must be fixed
-scrollbar = ttk.Scrollbar(server_frame, orient='vertical', command=received_client_entry.yview)
-scrollbar.grid(row=6, column=1, sticky=tk.E)
-received_client_entry['yscrollcommand'] = scrollbar.set
+# scrollbar = ttk.Scrollbar(server_frame, orient='vertical', command=received_client_entry.yview)
+# scrollbar.grid(row=6, column=1, sticky=tk.E)
+# received_client_entry['yscrollcommand'] = scrollbar.set
 #scrollbar - must be fixed
 
 delete_button_server = tk.Button(server_frame, text="DELETE", background="#eb3838", foreground="white")

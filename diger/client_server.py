@@ -66,7 +66,7 @@ send_button = tk.Button(server_frame, text="SEND", background="#278c3d", foregro
 send_button.grid(column=1, row=10, sticky=E, pady=5, padx=20)
 
 #server button bind
-listen_button.bind("<Button-1>", lambda event : server.bind(event, server_status_value= server_status_value))
+listen_button.bind("<Button-1>", lambda event : server.bind(event, server_status_value= server_status_value)) #command la yapmayı dene
 delete_button_server.bind("<Button-1>", lambda event,m=received_client_entry: server.delete_entry(m))
 send_button.bind("<Button-1>", lambda event ,m= send_client_entry :server.send_message_to_client(m))
 send_button.bind("<Button-1>", lambda event ,m= received_client_entry: client.get_message(m), add='+')
