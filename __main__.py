@@ -1,7 +1,7 @@
 #pylint: skip-file
-from server import Server
-from client import Client
-from root import *
+from src.socket.client import Client
+from src.socket.server import Server
+from src.window.root import root
 
 server = Server()
 client = Client(server) 

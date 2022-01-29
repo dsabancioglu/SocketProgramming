@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 
-from root import *
+from ..window.root import *
 
 
 class ClientWidgets:

@@ -2,7 +2,7 @@
 from tkinter import *
 import socket
 
-from client_widgets import ClientWidgets
+from ..widgets.client_widgets import ClientWidgets
 
 
 class Client:

@@ -3,7 +3,7 @@ from tkinter import *
 import tkinter as tk
 import socket
 
-from server_widgets import ServerWidgets
+from ..widgets.server_widgets import ServerWidgets
 
 
 class Server: 
