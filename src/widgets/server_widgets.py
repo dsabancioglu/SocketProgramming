@@ -8,7 +8,7 @@ from ..window.root import *
 
 class ServerWidgets:
 
-    def __init__(self, server, client):
+    def __init__(self, server):
         #Server Frame
         self.server_frame = ttk.Frame(root)
         self.server_frame.columnconfigure(0, weight=1)
@@ -54,8 +54,8 @@ class ServerWidgets:
         self.send_button = tk.Button(self.server_frame, text="SEND", background="#278c3d", foreground="white")
         self.send_button.grid(column=1, row=10, sticky=E, pady=5, padx=20)
         self.send_button.bind("<Button-1>", server.send_message_to_client)
-        self.send_button.bind("<Button-1>", client.get_message, add='+')
+        # self.send_button.bind("<Button-1>", client.get_message, add='+')
 
-        
+        self.created = 1
 
 
