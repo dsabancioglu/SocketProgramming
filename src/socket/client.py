@@ -47,7 +47,7 @@ class Client:
                 self.receivedMessage = self.socket.recv(1024)
                 self.clientWidgets.received_server_entry.insert(1.0,self.receivedMessage)
 
-    def close_connection(self): #buton oluştur buna, event alcak
+    def close_connection(self, event): #buton oluştur buna, event alcak
         self.socket.close()
         self.listen_mode = 0
         self.active = 0

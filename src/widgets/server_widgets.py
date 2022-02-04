@@ -4,20 +4,24 @@ from tkinter import ttk
 import tkinter as tk
 
 from ..window.root import *
+# from ..test_server_client.test_client import TestClient
 
 
 class ServerWidgets:
 
     def __init__(self, server):
         #Server Frame
-        self.server_frame = ttk.Frame(root)
+        self.server_frame = Toplevel()
+        self.server_frame.geometry('900x500+500+250')
+        self.server_frame.title("Server")
+        #self.server_frame = ttk.Frame(root)
         self.server_frame.columnconfigure(0, weight=1)
         self.server_frame.columnconfigure(1, weight=1)
-        self.server_frame.pack(fill=BOTH, side=LEFT ,expand=True)
+        # self.server_frame.pack(fill=BOTH, side=LEFT ,expand=True)
 
         #Server Widgets
-        self.server_label = ttk.Label(self.server_frame, text="Server")
-        self.server_label.grid(column=0, row=0, sticky=tk.E, padx=5 ,pady=5)
+        # self.server_label = ttk.Label(self.server_frame, text="Server")
+        # self.server_label.grid(column=0, row=0, sticky=tk.E, padx=5 ,pady=5)
 
         self.server_ip = ttk.Label(self.server_frame, text="Ip:").grid(column=0, row=1, sticky=tk.W, padx=20, pady=5)
         self.server_ip_entry = ttk.Entry(self.server_frame, textvariable=server.ip_var).grid(column=1, row=1, sticky=tk.W, padx=20,pady=5)
@@ -28,6 +32,10 @@ class ServerWidgets:
         self.listen_button = tk.Button(self.server_frame, text="Run Server",background="#54727a",foreground="white")
         self.listen_button.grid(column=1, row=3, sticky=tk.NS, padx=20, pady=5)
         self.listen_button.bind("<Button-1>", server.bind)
+
+        self.stop_button = tk.Button(self.server_frame, text="Stop Server",background="#54727a",foreground="white")
+        self.stop_button.grid(column=0, row=3, sticky=tk.E, padx=0, pady=5) 
+        self.stop_button.bind("<Button-1>", server.close_connection)
 
         self.server_status = ttk.Label(self.server_frame, text="Server Status:").grid(column=0,row=4, sticky=tk.W, padx=20,pady=20)
         self.server_status_value = ttk.Label(self.server_frame, text="Stop", foreground="red")
@@ -57,5 +65,6 @@ class ServerWidgets:
         # self.send_button.bind("<Button-1>", client.get_message, add='+')
 
         self.created = 1
+
 
 

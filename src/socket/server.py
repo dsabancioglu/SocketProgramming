@@ -13,10 +13,12 @@ class Server:
         self.ip_var = tk.StringVar()
         self.port_var = tk.StringVar()
         self.socket = socket.socket()
+        self.socket.setblocking(0)
         self.max_connection = 5
         self.active = 0
         self.listen_mode = 0
         self.serverWidgets = ServerWidgets(self)
+        
     # def create_widgets(self, server, client):
     #     self.serverWidgets = ServerWidgets(server, client) #bunu init e tasi
     #     self.created = 1 #bunu widget a tasi
@@ -47,7 +49,9 @@ class Server:
                 self.get_message()"""
 
     def accept_connection(self): #waiting request from the client
-        self.c,self.addr = self.socket.accept()
+        print("before accept")
+        self.c,self.addr = self.socket.accept() #prog burada takili kaliyor
+        print("before accept")
         print ('\nGot connection from', self.addr) 
         self.listen_mode = 1
 
@@ -62,7 +66,7 @@ class Server:
                 print(self.receivedMessage)
                 self.serverWidgets.received_client_entry.insert("end", self.receivedMessage)
 
-    def close_connection(self): #bunun da butonunu ekle
+    def close_connection(self,event): #bunun da butonunu ekle
         self.c.close()
         self.listen_mode = 0
         self.active = 0

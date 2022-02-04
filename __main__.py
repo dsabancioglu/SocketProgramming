@@ -1,16 +1,19 @@
 #pylint: skip-file
-import threading
+# import threading
 
-from src.socket.client import Client
-from src.socket.server import Server
-from src.window.root import root
+# from tkinter import Button
+# from src.socket.client import Client
+# from src.socket.server import Server
+from src.window.root import Root
 
-server = Server()
-client = Client() 
+root = Root()
 
-if client.clientWidgets.created and server.serverWidgets.created :
-    root.mainloop()
+# server = Server()
+# client = Client() 
 
-client_get_message_thread = threading.Thread(target=client.get_message, args=(0,))
-server_get_message_thread = threading.Thread(target=server.get_message, args=(0,))
+# if client.clientWidgets.created and server.serverWidgets.created :
+#     root.mainloop()
+
+# client_get_message_thread = threading.Thread(target=client.get_message, args=(0,))
+# server_get_message_thread = threading.Thread(target=server.get_message, args=(0,))
 

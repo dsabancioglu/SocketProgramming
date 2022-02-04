@@ -3,21 +3,26 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 
-from ..window.root import *
+# from ..test_server_client.test_server import TestServer
+# from ..window.root import *
 
 
 class ClientWidgets:
 
     def __init__(self, client):
+        
         #Client Frame
-        self.client_frame = ttk.Frame(root)
+        self.client_frame = Toplevel()
+        self.client_frame.title("Client")
+        self.client_frame.geometry('900x500+500+250')
+        #self.client_frame = ttk.Frame(root)
         self.client_frame.columnconfigure(0, weight=1)
         self.client_frame.columnconfigure(1, weight=1)
-        self.client_frame.pack(fill=BOTH, side=RIGHT , expand=True)
+        #self.client_frame.pack(fill=BOTH, side=RIGHT , expand=True)
 
         #Client widgets
-        self.client_label = ttk.Label(self.client_frame, text="Client")
-        self.client_label.grid(column=0, row=0, sticky=tk.E, padx=5 ,pady=5)
+        # self.client_label = ttk.Label(self.client_frame, text="Client")
+        # self.client_label.grid(column=0, row=0, sticky=tk.E, padx=5 ,pady=5)
 
         self.client_ip = ttk.Label(self.client_frame, text="Ip:").grid(column=0, row=1, sticky=tk.W, padx=20, pady=5)
         self.client_ip_entry = ttk.Entry(self.client_frame, textvariable=client.ip_var).grid(column=1, row=1, sticky=tk.W, padx=20,pady=5)
@@ -26,8 +31,12 @@ class ClientWidgets:
         self.client_port_entry = ttk.Entry(self.client_frame,textvariable=client.port_var).grid(column=1, row=2, sticky=tk.W, padx=20, pady=5)
 
         self.connect_button = tk.Button(self.client_frame, text="Connect To Server",background="#54727a",foreground="white")
-        self.connect_button.grid(column=1, row=3, sticky=tk.NS, padx=20, pady=5) #is active i triggerlamasi lazim event bind edicez
+        self.connect_button.grid(column=1, row=3, sticky=tk.NS, padx=20, pady=5) 
         self.connect_button.bind("<Button-1>", client.get_connection)
+
+        self.disconnect_button = tk.Button(self.client_frame, text="Disconnect",background="#54727a",foreground="white")
+        self.disconnect_button.grid(column=0, row=3, sticky=tk.E, padx=0, pady=5) 
+        self.disconnect_button.bind("<Button-1>", client.close_connection)
 
         self.connection_statement = ttk.Label(self.client_frame, text="Connection Statement:").grid(column=0,row=4, sticky=tk.W, padx=20,pady=20)
         self.connection_statement_value = ttk.Label(self.client_frame, text="Not connected", foreground="red")
@@ -51,5 +60,11 @@ class ClientWidgets:
         self.delete_button_client.bind("<Button-1>", client.delete_entry)
 
         self.created = 1
+
+
+
+    
+    
+ 
 
         
