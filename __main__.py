@@ -1,5 +1,5 @@
 #pylint: skip-file
-# import threading
+import threading
 
 # from tkinter import Button
 # from src.socket.client import Client
@@ -14,6 +14,5 @@ root = Root()
 # if client.clientWidgets.created and server.serverWidgets.created :
 #     root.mainloop()
 
-# client_get_message_thread = threading.Thread(target=client.get_message, args=(0,))
 # server_get_message_thread = threading.Thread(target=server.get_message, args=(0,))
 

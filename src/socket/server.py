@@ -1,27 +1,22 @@
 #pylint: skip-file
-from queue import Empty
-from tkinter import *
+import threading
 import tkinter as tk
 import socket
 
-from ..widgets.server_widgets import ServerWidgets
+# from ..widgets.server_widgets import ServerWidgets
 
 
 class Server: 
     
-    def __init__(self):
+    def __init__(self, serverWidgets):
         self.ip_var = tk.StringVar()
         self.port_var = tk.StringVar()
-        self.socket = socket.socket()
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setblocking(0)
         self.max_connection = 5
-        self.active = 0
-        self.listen_mode = 0
-        self.serverWidgets = ServerWidgets(self)
+        # self.serverWidgets = ServerWidgets(self)
+        self.serverWidgets = serverWidgets
         
-    # def create_widgets(self, server, client):
-    #     self.serverWidgets = ServerWidgets(server, client) #bunu init e tasi
-    #     self.created = 1 #bunu widget a tasi
 
     def bind(self,event):
         ip = self.ip_var.get()
@@ -30,44 +25,43 @@ class Server:
         try:
             self.socket.bind((ip, port))
             print("Socket binded to %s port\n" %(port))
-            self.active = 1
             self.serverWidgets.server_status_value.config(text="Run",foreground="#278c3d")
-            self.listen_port()
-
+            self.socket.listen(self.max_connection)
+            self.listen = True
         except:
             print ('\n\nBind failed') 
-            self.active = 0
-            self.status = "passive"
             self.serverWidgets.server_status_value.config(text="Stop", foreground="#eb3838")
 
-    def listen_port(self):
-        self.socket.listen(self.max_connection) #listens port untill got client connect request
-        self.accept_connection() #after client request came, server accept connection request (3-way handshake completed)
-        
-        """while True: 
-            if(self.listen_mode):
-                self.get_message()"""
+        if(self.listen):
+            print('Waiting for a Connection..')
+            self.accept_connection()
 
     def accept_connection(self): #waiting request from the client
-        print("before accept")
-        self.c,self.addr = self.socket.accept() #prog burada takili kaliyor
-        print("before accept")
-        print ('\nGot connection from', self.addr) 
-        self.listen_mode = 1
+        client_count = 0
+        # while True:
+        self.connection, self.address = self.socket.accept() #programın burda durmasi client i etkilemesin, o yüzden client ve server'ı ayrı 2 thread ya da process olarak çlıştır
+        print('Connected to: ' + self.address[0] + ':'.format(self.address[1]))
+        get_message_thread = threading.Thread(target=self.get_message, args=(self.connection,)) #her client connection ını ayrı ayrı threadlerde dinlicez
+        get_message_thread.start()
+        client_count += 1
+        print('Thread Number: '.format(client_count))
 
     def send_message_to_client(self,event):
         message = self.serverWidgets.send_client_entry.get('1.0','end')
-        self.c.send(message.encode())
+        self.connection.send(message.encode())
     
-    def get_message(self):
+    def get_message(self,connection):   #ayri bir thread olarak calistigi icin programin diger bolumlerinden bagimsiz gibi dusunebilirsin.
+        connection.send(str.encode('Welcome to the Servern'))
         while True:
-            if(self.listen_mode and self.c.recv(1024) != ""):
-                self.receivedMessage = self.c.recv(1024)
-                print(self.receivedMessage)
-                self.serverWidgets.received_client_entry.insert("end", self.receivedMessage)
+                self.receivedMessage = self.connection.recv(1024)
+                if not self.receivedMessage:
+                    continue
+                else:
+                    print(self.receivedMessage)
+                    self.serverWidgets.received_client_entry.insert("end", self.receivedMessage)
 
     def close_connection(self,event): #bunun da butonunu ekle
-        self.c.close()
+        self.connection.close()
         self.listen_mode = 0
         self.active = 0
         #stop thread
@@ -75,5 +69,5 @@ class Server:
         print("Connection closed")
     
     def delete_entry(self,event):
-        self.serverWidgets.received_client_entry.delete('1.0', END)
+        self.serverWidgets.received_client_entry.delete('1.0', 'end')
         

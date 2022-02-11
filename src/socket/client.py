@@ -1,24 +1,19 @@
 #pylint: skip-file
+import threading
 from tkinter import *
 import socket
 
-from ..widgets.client_widgets import ClientWidgets
+# from ..widgets.client_widgets import ClientWidgets
 
 
 class Client:
 
-    def __init__(self):
-        #self.server_object = server
+    def __init__(self, clientWidgets):
         self.ip_var = StringVar()
         self.port_var = StringVar()
-        self.socket = socket.socket()
-        self.listen_mode = 0
-        self.active = 0
-        self.clientWidgets = ClientWidgets(self)
-
-    # def create_widgets(self, server, client):
-    #     self.clientWidgets = ClientWidgets(server, client)  
-    #     self.created = 1
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # self.clientWidgets = ClientWidgets(self)
+        self.clientWidgets = clientWidgets
 
     def get_connection(self,event):
         ip = self.ip_var.get()
@@ -28,13 +23,11 @@ class Client:
             self.socket.connect((ip, port))
             print("\nconnection established")
             self.clientWidgets.connection_statement_value.config(text="Connected", foreground="#278c3d")
-            self.active = 1
-            self.listen_mode = 1
-            #self.server_object.accept_connection()
+            get_message_thread = threading.Thread(target=self.get_message) #her client connection ını ayrı ayrı threadlerde dinlicez
+            get_message_thread.start()
         except:
             print("\nConnection could not be established" )
             self.clientWidgets.connection_statement_value.config(text="Not connected", foreground="#eb3838")
-            self.active = 0
 
     def send_message_to_server(self,event):
         message = self.clientWidgets.send_server_entry.get('1.0','end').encode()
@@ -43,8 +36,10 @@ class Client:
 
     def get_message(self):
         while True:
-            if(self.listen_mode and self.socket.recv(1024)!= ""):
-                self.receivedMessage = self.socket.recv(1024)
+            self.receivedMessage = self.socket.recv(1024)
+            if not self.receivedMessage: #empty string gelirse dur
+                continue
+            else:
                 self.clientWidgets.received_server_entry.insert(1.0,self.receivedMessage)
 
     def close_connection(self, event): #buton oluştur buna, event alcak
