@@ -1,4 +1,5 @@
 #pylint: skip-file
+from ast import arg
 from tkinter import *
 import tkinter as tk
 import multiprocessing
@@ -21,16 +22,18 @@ class Root:
     def create_server(self):
         print(  "server")
         # self.server = Server()  #thread olarak calistir
-        
-        self.server_process = multiprocessing.Process(target=Server.__init__) #Bunu düzelt
+        server = Server()
+        self.server_process = multiprocessing.Process(target=server.__init__, args=(server,)) #Bunu düzelt
+        print(  "server")
         self.server_process.start()
+        print(  "server")
         # self.server_thread = ServerWidgets() #create server thread
         # self.server_thread.start() #start server thread
     
     def create_client(self):   #thread olarak calistir
         print(  "client")
-        # self.client = Client()
-        self.client_process = multiprocessing.Process(target=Client.__init__)
+        client = Client()
+        self.client_process = multiprocessing.Process(target=client.__init__, args=(client,))
         self.client_process.start()
         # self.client_thread = ClientWidgets()  #create client thread
         # self.server_thread.start()  #start client thread
