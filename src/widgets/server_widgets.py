@@ -43,7 +43,7 @@ class ServerWidgets:
         self.received_client_entry.grid(column=0 ,row=6 ,sticky= EW,padx=20,pady=5, columnspan=2)
 
         #scrollbar - must be fixed
-        # scrollbar = ttk.Scrollbar(server_frame, orient='vertical', command=received_client_entry.yview)
+          # scrollbar = ttk.Scrollbar(server_frame, orient='vertical', command=received_client_entry.yview)
         # scrollbar.grid(row=6, column=1, sticky=tk.E)
         # received_client_entry['yscrollcommand'] = scrollbar.set
         #scrollbar - must be fixed
