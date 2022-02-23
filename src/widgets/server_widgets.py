@@ -2,26 +2,23 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-from threading import Thread
 
-from ..window.root import *
-from ..socket.server import Server
+# from ..window.root import *
+# from ..socket.server import Server
 
 # from ..test_server_client.test_client import TestClient
 
 
-class ServerWidgets(Thread):
+class ServerWidgets:
 
-    def __init__(self):
-        Thread.__init__(self)
-
-    def run(self):   #thread olarak calisacak kisim, overriden from Thread
+    def __init__(self,server):   #thread olarak calisacak kisim, overriden from Thread
+        print(  "serverWidgets init")
         self.server_frame = Toplevel()
         self.server_frame.geometry('900x500+200+250')
         self.server_frame.title("Server")
         self.server_frame.columnconfigure(0, weight=1)
         self.server_frame.columnconfigure(1, weight=1)
-        self.server = Server(self)
+        self.server = server
 
         self.server_ip = ttk.Label(self.server_frame, text="Ip:").grid(column=0, row=1, sticky=tk.W, padx=20, pady=5)
         self.server_ip_entry = ttk.Entry(self.server_frame, textvariable=self.server.ip_var).grid(column=1, row=1, sticky=tk.W, padx=20,pady=5)
@@ -64,6 +61,7 @@ class ServerWidgets(Thread):
         self.send_button.bind("<Button-1>", self.server.send_message_to_client)
         # self.send_button.bind("<Button-1>", client.get_message, add='+')
 
+        self.server_frame.mainloop()
         #self.created = 1
 
 

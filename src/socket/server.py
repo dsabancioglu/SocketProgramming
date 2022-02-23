@@ -3,19 +3,19 @@ import threading
 import tkinter as tk
 import socket
 
-# from ..widgets.server_widgets import ServerWidgets
+from ..widgets.server_widgets import ServerWidgets
 
 
 class Server: 
     
-    def __init__(self, serverWidgets):
+    def __init__(self):
         self.ip_var = tk.StringVar()
         self.port_var = tk.StringVar()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setblocking(0)
         self.max_connection = 5
-        # self.serverWidgets = ServerWidgets(self)
-        self.serverWidgets = serverWidgets
+        self.serverWidgets = ServerWidgets(self)
+        # self.serverWidgets = serverWidgets
         
 
     def bind(self,event):

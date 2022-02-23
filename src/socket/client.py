@@ -3,17 +3,17 @@ import threading
 from tkinter import *
 import socket
 
-# from ..widgets.client_widgets import ClientWidgets
+from ..widgets.client_widgets import ClientWidgets
 
 
 class Client:
 
-    def __init__(self, clientWidgets):
+    def __init__(self):
         self.ip_var = StringVar()
         self.port_var = StringVar()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # self.clientWidgets = ClientWidgets(self)
-        self.clientWidgets = clientWidgets
+        self.clientWidgets = ClientWidgets(self)
+        # self.clientWidgets = clientWidgets
 
     def get_connection(self,event):
         ip = self.ip_var.get()

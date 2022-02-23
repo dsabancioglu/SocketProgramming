@@ -1,27 +1,24 @@
 #pylint: skip-file
-import threading
+
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 
 # from ..test_server_client.test_server import TestServer
 # from ..window.root import *
-from ..socket.client import Client
+# from ..socket.client import Client
 
-class ClientWidgets(threading.Thread):
+class ClientWidgets:
 
-    def __init__(self):
-        threading.Thread.__init__(self)
-        
-
-    def run(self):    
+    def __init__(self, client):  
+        print(  " clientWidgets.run")
         #Client Frame
         self.client_frame = Toplevel()
         self.client_frame.title("Client")
         self.client_frame.geometry('900x500+800+250')
         self.client_frame.columnconfigure(0, weight=1)
         self.client_frame.columnconfigure(1, weight=1)
-        self.client = Client(self)
+        self.client = client
 
         self.client_ip = ttk.Label(self.client_frame, text="Ip:").grid(column=0, row=1, sticky=tk.W, padx=20, pady=5)
         self.client_ip_entry = ttk.Entry(self.client_frame, textvariable=self.client.ip_var).grid(column=1, row=1, sticky=tk.W, padx=20,pady=5)
@@ -58,6 +55,7 @@ class ClientWidgets(threading.Thread):
         self.delete_button_client.grid(column=1, row=10, sticky=E, pady=5, padx=20)
         self.delete_button_client.bind("<Button-1>", self.client.delete_entry)
 
+        self.client_frame.mainloop() #???????????
         #self.created = 1
 
 
