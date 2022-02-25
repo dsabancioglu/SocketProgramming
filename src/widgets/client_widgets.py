@@ -11,11 +11,11 @@ import tkinter as tk
 class ClientWidgets:
 
     def __init__(self, client):  
-        print(  " clientWidgets.run")
+        print(  " clientWidgets init")
         #Client Frame
         self.client_frame = Toplevel()
         self.client_frame.title("Client")
-        self.client_frame.geometry('900x500+800+250')
+        self.client_frame.geometry('900x500+900+500')
         self.client_frame.columnconfigure(0, weight=1)
         self.client_frame.columnconfigure(1, weight=1)
         self.client = client

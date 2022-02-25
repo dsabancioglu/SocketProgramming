@@ -1,11 +1,8 @@
 #pylint: skip-file
-from ast import arg
 from tkinter import *
 import tkinter as tk
 import multiprocessing
 
-# from ..widgets.client_widgets import ClientWidgets
-# from ..widgets.server_widgets import ServerWidgets
 from ..socket.client import Client
 from ..socket.server import Server
 
@@ -22,19 +19,22 @@ class Root:
     def create_server(self):
         print(  "server")
         # self.server = Server()  #thread olarak calistir
-        server = Server()
-        self.server_process = multiprocessing.Process(target=server.__init__, args=(server,)) #Bunu düzelt
-        print(  "server")
-        self.server_process.start()
-        print(  "server")
+        self.server = Server()
+        # print(  "server before thread")
+        # self.server_process = multiprocessing.Process(target=server.create) #Bunu düzelt
+        # print(  "server process created")
+        # self.server_process.start()
+        # print(  "server process started")
         # self.server_thread = ServerWidgets() #create server thread
         # self.server_thread.start() #start server thread
     
     def create_client(self):   #thread olarak calistir
         print(  "client")
-        client = Client()
-        self.client_process = multiprocessing.Process(target=client.__init__, args=(client,))
-        self.client_process.start()
+        self.client = Client() #boyle yapinca window yaratiliyor ama bu satirdan sonrasi calismiyor, yani process olusmuyor
+        # self.client_process = multiprocessing.Process(target=client.__init__)
+        # print(  "client process created")
+        # self.client_process.start()
+        # print(  "client process started")
         # self.client_thread = ClientWidgets()  #create client thread
         # self.server_thread.start()  #start client thread
 

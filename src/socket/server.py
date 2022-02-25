@@ -5,11 +5,10 @@ import socket
 
 from ..widgets.server_widgets import ServerWidgets
 
-
 class Server: 
     
     def __init__(self):
-        print(  "server init")
+        print(  "server create function")
         self.ip_var = tk.StringVar()
         self.port_var = tk.StringVar()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -17,8 +16,6 @@ class Server:
         self.max_connection = 5
         self.serverWidgets = ServerWidgets(self)
         
-        
-
     def bind(self,event):
         ip = self.ip_var.get()
         port = int(self.port_var.get())
@@ -26,7 +23,7 @@ class Server:
         try:
             self.socket.bind((ip, port))
             print("Socket binded to %s port\n" %(port))
-            self.serverWidgets.server_status_value.config(text="Run",foreground="#278c3d")
+            self.serverWidgets.server_status_value.config(text="Run",foreground="#278c3d") #hata veriyor 
             self.socket.listen(self.max_connection)
             self.listen = True
         except:
@@ -35,17 +32,24 @@ class Server:
 
         if(self.listen):
             print('Waiting for a Connection..')
-            self.accept_connection()
+            self.client_count = 0
+            #self.accept_connection()
+
+            
 
     def accept_connection(self): #waiting request from the client
-        client_count = 0
         # while True:
+
+        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.clientSocket.connect(('localhost', 6789))
+        self.clientSocket.sendall(('Hello, world').encode())
+
         self.connection, self.address = self.socket.accept() #programın burda durmasi client i etkilemesin, o yüzden client ve server'ı ayrı 2 thread ya da process olarak çlıştır
         print('Connected to: ' + self.address[0] + ':'.format(self.address[1]))
         get_message_thread = threading.Thread(target=self.get_message, args=(self.connection,)) #her client connection ını ayrı ayrı threadlerde dinlicez
         get_message_thread.start()
-        client_count += 1
-        print('Thread Number: '.format(client_count))
+        self.client_count += 1
+        print('Thread Number: '.format(self.client_count))
 
     def send_message_to_client(self,event):
         message = self.serverWidgets.send_client_entry.get('1.0','end')

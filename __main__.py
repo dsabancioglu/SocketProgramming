@@ -1,9 +1,4 @@
 #pylint: skip-file
-import threading
-
-# from tkinter import Button
-# from src.socket.client import Client
-# from src.socket.server import Server
 from src.window.root import Root
 
 root = Root()

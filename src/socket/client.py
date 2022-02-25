@@ -13,7 +13,6 @@ class Client:
         self.port_var = StringVar()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.clientWidgets = ClientWidgets(self)
-        # self.clientWidgets = clientWidgets
 
     def get_connection(self,event):
         ip = self.ip_var.get()
