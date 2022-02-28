@@ -5,16 +5,16 @@ import socket
 
 from ..widgets.server_widgets import ServerWidgets
 
-class Server: 
-    
+class Server:     
     def __init__(self):
         print(  "server create function")
         self.ip_var = tk.StringVar()
         self.port_var = tk.StringVar()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # self.socket.setblocking(0)
         self.max_connection = 5
+        self.listen = False
         self.serverWidgets = ServerWidgets(self)
+        print(self.serverWidgets)
         
     def bind(self,event):
         ip = self.ip_var.get()
@@ -33,16 +33,17 @@ class Server:
         if(self.listen):
             print('Waiting for a Connection..')
             self.client_count = 0
-            #self.accept_connection()
+            self.accept_connection()
 
             
 
     def accept_connection(self): #waiting request from the client
         # while True:
 
-        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.clientSocket.connect(('localhost', 6789))
-        self.clientSocket.sendall(('Hello, world').encode())
+        #-------TEST-----------
+        # self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # self.clientSocket.connect(('localhost', 6789))
+        # self.clientSocket.sendall(('Hello, world').encode())
 
         self.connection, self.address = self.socket.accept() #programın burda durmasi client i etkilemesin, o yüzden client ve server'ı ayrı 2 thread ya da process olarak çlıştır
         print('Connected to: ' + self.address[0] + ':'.format(self.address[1]))

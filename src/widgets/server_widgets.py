@@ -5,8 +5,10 @@ import tkinter as tk
 
 
 class ServerWidgets:
+    def __init__(self,server):  
+      pass
 
-    def __init__(self,server):   
+    def create(self): 
         print(  "serverWidgets init")
         self.server_frame = Toplevel()
         self.server_frame.geometry('900x500+50+100')
@@ -55,7 +57,6 @@ class ServerWidgets:
         self.send_button.bind("<Button-1>", server.send_message_to_client)
         # self.send_button.bind("<Button-1>", client.get_message, add='+')
 
-        self.server_frame.mainloop()
         #self.created = 1
 
 
