@@ -5,10 +5,7 @@ import tkinter as tk
 
 
 class ServerWidgets:
-    def __init__(self,server):  
-      pass
-
-    def create(self): 
+    def __init__(self,server):   
         print(  "serverWidgets init")
         self.server_frame = Toplevel()
         self.server_frame.geometry('900x500+50+100')
