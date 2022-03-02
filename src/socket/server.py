@@ -44,7 +44,6 @@ class Server:
         
         while True:
             self.connection, self.address = self.socket.accept() 
-            print("connection type : {}".format(type(self.connection)))
             print('Server: Connected to: ' + self.address[0] + ': {}'.format(self.address[1]))
             print(self.client_count)
             self.client_count += 1

@@ -8,7 +8,7 @@ class ServerWidgets:
     def __init__(self,server):   
         print(  "serverWidgets init")
         self.server_frame = Toplevel()
-        self.server_frame.geometry('900x500+50+100')
+        self.server_frame.geometry('500x500+50+300')
         self.server_frame.title("Server")
         self.server_frame.columnconfigure(0, weight=1)
         self.server_frame.columnconfigure(1, weight=1)
