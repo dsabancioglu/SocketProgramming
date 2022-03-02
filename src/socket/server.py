@@ -5,7 +5,9 @@ import socket
 import logging
 import datetime
 
-now = datetime.datetime.now()
+now = datetime.datetime.now().strftime("%x").replace("/",".") 
+log_file = "server_" + now + ".log"
+logging.basicConfig(filename= log_file, level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%I:%M:%S')
 
 from ..widgets.server_widgets import ServerWidgets
 
@@ -18,9 +20,6 @@ class Server:
         self.max_connection = 5
         self.listen = False
         self.serverWidgets = ServerWidgets(self)
-        self.listen = False
-        self.connection = "" 
-        logging.basicConfig(filename='myapp.log', level=logging.INFO)
 
     def bind(self,event):
         ip = self.ip_var.get()
@@ -56,6 +55,7 @@ class Server:
 
     def send_message_to_client(self,event):
         self.message = self.serverWidgets.send_client_entry.get('1.0','end')
+        logging.info("Sended message:   {}". format(self.message))
         self.connection.send(self.message.encode())
     
     def get_message(self,connection):   #her connection icin surekli olarak dinleme yapar
@@ -63,6 +63,7 @@ class Server:
         connection.send(str.encode('Welcome to the Server'))
         while True:
                 self.receivedMessage = self.connection.recv(1024)  #program mesaj gelene kadar burada bekler
+                logging.info("Received message: {}". format(self.receivedMessage))
                 if not self.receivedMessage:
                     continue
                 else:
