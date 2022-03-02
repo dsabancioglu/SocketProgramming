@@ -54,9 +54,10 @@ class ServerWidgets:
         self.send_button.grid(column=1, row=10, sticky=E, pady=5, padx=20)
         self.send_button.bind("<Button-1>", server.send_message_to_client)
         # self.send_button.bind("<Button-1>", client.get_message, add='+')
-
-        self.server_frame.mainloop()
-        #self.created = 1
+        self.created = 1
+        print(  "serverWidgets completed")
+        # self.server_frame.mainloop()
+        
 
 
 

@@ -21,13 +21,18 @@ class Root:
         # self.server = Server()  #thread olarak calistir
         self.server = Server()
         # print(  "server before thread")
-        # self.server_process = multiprocessing.Process(target=server.create) #Bunu düzelt
+        # self.server_process = multiprocessing.Process(target=server.create) #Bunu duzelt
         # print(  "server process created")
         # self.server_process.start()
         # print(  "server process started")
         # self.server_thread = ServerWidgets() #create server thread
         # self.server_thread.start() #start server thread
-    
+
+        #PROCESS OLUSTURDUKTAN SONRA SERVER.ROOT.MAINLOOP() YAP, CUNKU WINDOW ACILDIKTAN SONRA ROOT.MAINLOOP'TA TAKILI KALDIGI ICIN DIGER SATIRA BAKMIYOR PROCESS OLUSTURAMIYOR
+        # if(self.server.serverWidgets.created == 1) :  bunu kontrol etmeden direkt alt satiri yazsan olur bence
+        #     self.server.serverWidgets.server_frame.mainloop()
+
+
     def create_client(self):   #thread olarak calistir
         print(  "client")
         self.client = Client() #boyle yapinca window yaratiliyor ama bu satirdan sonrasi calismiyor, yani process olusmuyor
@@ -38,7 +43,7 @@ class Root:
         # self.client_thread = ClientWidgets()  #create client thread
         # self.server_thread.start()  #start client thread
 
-''' NOT: Her Window ayrı 1 process olarak çalışacak (Server Window/Client Window), Her process içinde de sürekli çalışan(sürekli mesaj dinleyen) bir thread var ---> get_message()'''
+''' NOT: Her Window ayri 1 process olarak calisacak(Server Window/Client Window), Her process icinde de surekli calisan(surekli mesaj dinleyen) bir thread var ---> get_message()'''
 
 
 

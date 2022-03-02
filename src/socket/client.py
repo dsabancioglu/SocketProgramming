@@ -24,8 +24,9 @@ class Client:
             self.clientWidgets.connection_statement_value.config(text="Connected", foreground="#278c3d")
             get_message_thread = threading.Thread(target=self.get_message) #her client connection ını ayrı ayrı threadlerde dinlicez
             get_message_thread.start()
-        except:
-            print("\nConnection could not be established" )
+        except socket.error as msg:
+            print("\nConnection could not be established, error message : {}".format(msg) )
+            
             self.clientWidgets.connection_statement_value.config(text="Not connected", foreground="#eb3838")
 
     def send_message_to_server(self,event):

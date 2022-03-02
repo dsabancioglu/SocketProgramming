@@ -55,7 +55,7 @@ class ClientWidgets:
         self.delete_button_client.grid(column=1, row=10, sticky=E, pady=5, padx=20)
         self.delete_button_client.bind("<Button-1>", self.client.delete_entry)
 
-        self.client_frame.mainloop() #???????????
+        # self.client_frame.mainloop() #???????????
         #self.created = 1
 
 
