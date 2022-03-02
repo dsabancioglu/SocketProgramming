@@ -17,7 +17,7 @@ class Root:
     
     #her window ayri 1 process olarak calisacak
     def create_server(self):
-        print(  "server")
+        print("\nserver")
         self.server = Server()
         # print(  "server before thread")
         # self.server_process = multiprocessing.Process(target=server.create) #Bunu duzelt
@@ -33,7 +33,7 @@ class Root:
 
 
     def create_client(self):   #thread olarak calistir
-        print(  "client")
+        print(  "\nclient")
         self.client = Client() #boyle yapinca window yaratiliyor ama bu satirdan sonrasi calismiyor, yani process olusmuyor
         # self.client_process = multiprocessing.Process(target=client.__init__)
         # print(  "client process created")

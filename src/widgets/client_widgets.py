@@ -11,7 +11,7 @@ import tkinter as tk
 class ClientWidgets:
 
     def __init__(self, client):  
-        print(  " clientWidgets init")
+        print("clientWidgets init")
         #Client Frame
         self.client_frame = Toplevel()
         self.client_frame.title("Client")
