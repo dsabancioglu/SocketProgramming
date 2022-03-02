@@ -4,9 +4,6 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 
-# from ..test_server_client.test_server import TestServer
-# from ..window.root import *
-# from ..socket.client import Client
 
 class ClientWidgets:
 
