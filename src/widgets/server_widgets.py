@@ -52,10 +52,7 @@ class ServerWidgets:
         self.send_button = tk.Button(self.server_frame, text="SEND", background="#278c3d", foreground="white")
         self.send_button.grid(column=1, row=10, sticky=E, pady=5, padx=20)
         self.send_button.bind("<Button-1>", server.send_message_to_client)
-        # self.send_button.bind("<Button-1>", client.get_message, add='+')
-        self.created = 1
         print(  "serverWidgets completed\n")
-        # self.server_frame.mainloop()
         
 
 

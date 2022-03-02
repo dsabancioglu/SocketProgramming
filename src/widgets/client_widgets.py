@@ -45,7 +45,6 @@ class ClientWidgets:
         self.send_button_client = tk.Button(self.client_frame, text="SEND", background="#278c3d", foreground="white")
         self.send_button_client.grid(column=1, row=7, sticky=E, pady=5, padx=20)
         self.send_button_client.bind("<Button-1>", self.client.send_message_to_server)
-        #self.send_button_client.bind("<Button-1>", server.get_message, add='+')
 
         self.received_server = ttk.Label(self.client_frame, text="Received message from Server:").grid(column=0,row=8,sticky=tk.W, padx=20,pady=15)
         self.received_server_entry = tk.Text(self.client_frame, width=20,height=3) 
@@ -54,9 +53,6 @@ class ClientWidgets:
         self.delete_button_client = tk.Button(self.client_frame, text="DELETE", background="#eb3838", foreground="white")
         self.delete_button_client.grid(column=1, row=10, sticky=E, pady=5, padx=20)
         self.delete_button_client.bind("<Button-1>", self.client.delete_entry)
-
-        # self.client_frame.mainloop() #???????????
-        #self.created = 1
 
 
 

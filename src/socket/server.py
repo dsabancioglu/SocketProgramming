@@ -14,12 +14,12 @@ class Server:
         self.ip_var = tk.StringVar()
         self.port_var = tk.StringVar()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #self.socket.setblocking(0)
         self.max_connection = 5
         self.listen = False
         self.serverWidgets = ServerWidgets(self)
         self.listen = False
         self.connection = "" 
+
     def bind(self,event):
         ip = self.ip_var.get()
         port = int(self.port_var.get())
@@ -38,21 +38,11 @@ class Server:
             print('Server: Waiting for a Connection..')
             self.client_count = 0
             accept_connection_thread = threading.Thread(target=self.accept_connection) #accept connection'i thread olarak calistirdigimiz icin program accept() metodunda bloklanmaz.
-            accept_connection_thread.start()
-            # self.accept_connection_process = multiprocessing.Process(target=self.accept_connection) #Bunu duzelt
-            # print("Server: accept_connection_process created")
-            # self.accept_connection_process.start()
-
-            
+            accept_connection_thread.start()            
 
     def accept_connection(self): 
         
-        while True: #surekli olarak portu dinler
-
-            #TEST
-            # self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            # self.clientSocket.connect(('localhost', 6789))
-            # self.clientSocket.sendall(('Hello, world').encode())
+        while True:
             self.connection, self.address = self.socket.accept() 
             print("connection type : {}".format(type(self.connection)))
             print('Server: Connected to: ' + self.address[0] + ': {}'.format(self.address[1]))
@@ -63,10 +53,6 @@ class Server:
             get_message_thread = threading.Thread(target=self.get_message, args=(self.connection,)) #her client connection ını ayrı ayrı threadlerde dinlicez
             get_message_thread.start()
 
-            # self.get_message(self.connection)  #bu satirda takiliyor, fonktaki looptan cikamadigi icin yeni gelen connection'i accept edemiyor
-
-
-
     def send_message_to_client(self,event):
         self.message = self.serverWidgets.send_client_entry.get('1.0','end')
         self.connection.send(self.message.encode())
@@ -75,17 +61,12 @@ class Server:
         print("Server: get_message thread created")
         connection.send(str.encode('Welcome to the Server'))
         while True:
-                print("Server: get_message loop")
-                self.receivedMessage = self.connection.recv(1024)  #program mesaj gelene kadar burda bekliyor, if i yazmana gerek yok aslinda
-                print("Server: receivedMessage'dan sonraki satır")
+                self.receivedMessage = self.connection.recv(1024)  #program mesaj gelene kadar burada bekler
                 if not self.receivedMessage:
                     continue
                 else:
                     print("Server: received message (server): {}".format(self.receivedMessage))
-                    self.serverWidgets.received_client_entry.insert("end", self.receivedMessage)  #fonksiyon thread olarak calistirilinca bu satir islevini yerine getirmiyor
-
-                    print("Server: received message (server): {}".format(self.receivedMessage))
-                
+                    self.serverWidgets.received_client_entry.insert("end", self.receivedMessage)  
 
     def close_connection(self,event): #bunun da butonunu ekle
         self.connection.close()
