@@ -18,7 +18,6 @@ class Root:
     #her window ayri 1 process olarak calisacak
     def create_server(self):
         print(  "server")
-        # self.server = Server()  #thread olarak calistir
         self.server = Server()
         # print(  "server before thread")
         # self.server_process = multiprocessing.Process(target=server.create) #Bunu duzelt

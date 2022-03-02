@@ -5,7 +5,6 @@ import tkinter as tk
 
 
 class ServerWidgets:
-
     def __init__(self,server):   
         print(  "serverWidgets init")
         self.server_frame = Toplevel()

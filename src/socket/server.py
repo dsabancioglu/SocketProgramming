@@ -5,8 +5,7 @@ import socket
 
 from ..widgets.server_widgets import ServerWidgets
 
-class Server: 
-    
+class Server:     
     def __init__(self):
         print(  "server create function")
         self.ip_var = tk.StringVar()
@@ -14,6 +13,7 @@ class Server:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #self.socket.setblocking(0)
         self.max_connection = 5
+        self.listen = False
         self.serverWidgets = ServerWidgets(self)
         self.listen = False
         
@@ -37,6 +37,7 @@ class Server:
             self.client_count = 0
             accept_connection_thread = threading.Thread(target=self.accept_connection) #accept connection'i thread olarak calistirdigimiz icin program accept() metodunda bloklanmaz.
             accept_connection_thread.start()
+
             
 
     def accept_connection(self): 
