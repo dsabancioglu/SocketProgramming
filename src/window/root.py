@@ -2,6 +2,7 @@
 from tkinter import *
 import tkinter as tk
 
+
 from ..socket.client import Client
 from ..socket.server import Server
 
@@ -14,7 +15,7 @@ class Root:
         self.client_button = tk.Button(self.root, text="Client", command=self.create_client).grid(column=0, row=2, sticky=tk.W, padx=20, pady=5)
         self.root.mainloop()
     
-    def create_server(self):
+    def create_server(self):                                                          
         print("\nserver")
         self.server = Server()
 

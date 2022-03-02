@@ -1,12 +1,14 @@
 #pylint: skip-file
-deger = 5
-a= [deger]
+import datetime
+import logging
 
-for i in range(5):
-    print("a doluysa girdi   {}".format(a))
+now = datetime.datetime.now().strftime("%x").replace("/",".") 
+filename = now + ".log"
+print(now, filename)
+print(type(now))
+# # logging.basicConfig(filename='{}.log'.format(now.strftime("%x")), level=logging.INFO)
+# x= "bb.log"
+logging.basicConfig(filename= filename, level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p') #dosyayı main'in oldugu yere acti
 
-    if i == 3:
-        a.clear()
-
-
+logging.info('is when this event was logged.')
 

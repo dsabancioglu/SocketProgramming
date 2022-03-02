@@ -2,9 +2,14 @@
 import threading
 from tkinter import *
 import socket
+import logging
+import datetime
 
 from ..widgets.client_widgets import ClientWidgets
 
+now = datetime.datetime.now().strftime("%x").replace("/",".") 
+log_file = "client_" + now + ".log"
+logging.basicConfig(filename= log_file, level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%I:%M:%S')
 
 class Client:
 
@@ -30,12 +35,14 @@ class Client:
 
     def send_message_to_server(self,event):
         message = self.clientWidgets.send_server_entry.get('1.0','end').encode()
+        logging.info("Sended message:   {}". format(message))
         print("Client: sended message -> {}". format(message))
         self.socket.send(message)
 
     def get_message(self):
         while True:
             self.receivedMessage = self.socket.recv(1024)
+            logging.info("Received message: {}". format(self.receivedMessage))
             if not self.receivedMessage: #empty string gelirse dur
                 continue
             else:

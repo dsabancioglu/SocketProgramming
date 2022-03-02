@@ -1,10 +1,11 @@
 #pylint: skip-file
-from http import client
-from multiprocessing import connection
 import threading
 import tkinter as tk
 import socket
-import multiprocessing
+import logging
+import datetime
+
+now = datetime.datetime.now()
 
 from ..widgets.server_widgets import ServerWidgets
 
@@ -19,6 +20,7 @@ class Server:
         self.serverWidgets = ServerWidgets(self)
         self.listen = False
         self.connection = "" 
+        logging.basicConfig(filename='myapp.log', level=logging.INFO)
 
     def bind(self,event):
         ip = self.ip_var.get()
