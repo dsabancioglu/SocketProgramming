@@ -11,7 +11,7 @@ class ServerWidgets:
     def __init__(self,server):   
         print(  "serverWidgets init")
         self.server_frame = Toplevel()
-        self.server_frame.geometry('500x500+1000+300') #450+300
+        self.server_frame.geometry('500x500+450+300') 
         self.server_frame.title("Server")
         self.server_frame.columnconfigure(0, weight=1)
         self.server_frame.columnconfigure(1, weight=1)
@@ -40,7 +40,6 @@ class ServerWidgets:
 
         receive_text_scrollbar = ttk.Scrollbar(self.server_frame, orient='vertical', command=self.received_client_entry.yview)
         receive_text_scrollbar.grid(row=6, column=1, sticky=tk.E, padx=20, ipady=7)
-        # scrollbar.pack(side=RIGHT, fill='y') root'u received_client_entry yap
         self.received_client_entry['yscrollcommand'] = receive_text_scrollbar.set
 
         self.delete_button_server = tk.Button(self.server_frame, text="DELETE", background="#eb3838", foreground="white")
@@ -50,6 +49,10 @@ class ServerWidgets:
         self.send_client = ttk.Label(self.server_frame, text="Send message to client:").grid(column=0,row=8, sticky=tk.W, padx=20,pady=15)
         self.send_client_entry = tk.Text(self.server_frame, width=20, height=3)
         self.send_client_entry.grid(column=0,row=9,sticky=tk.EW, padx=20,pady=0, columnspan=2)
+
+        send_text_scrollbar = ttk.Scrollbar(self.server_frame, orient='vertical', command=self.send_client_entry.yview)
+        send_text_scrollbar.grid(row=9, column=1, sticky=tk.E, padx=20, ipady=7)
+        self.send_client_entry['yscrollcommand'] = send_text_scrollbar.set
 
         self.send_button = tk.Button(self.server_frame, text="SEND", background="#278c3d", foreground="white")
         self.send_button.grid(column=1, row=10, sticky=E, pady=5, padx=20)
