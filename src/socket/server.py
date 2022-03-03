@@ -5,9 +5,7 @@ import socket
 import logging
 import datetime
 
-now = datetime.datetime.now().strftime("%x").replace("/",".") 
-log_file = "server_" + now + ".log"
-logging.basicConfig(filename= log_file, level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%I:%M:%S')
+ # logging.basicConfig(level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%I:%M:%S')
 
 from ..widgets.server_widgets import ServerWidgets
 
@@ -19,7 +17,19 @@ class Server:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.max_connection = 5
         self.listen = False
+        self.logger = self.setup_logger()
         self.serverWidgets = ServerWidgets(self)
+
+    def setup_logger(self):
+        now = datetime.datetime.now().strftime("%x").replace("/",".") 
+        file_name = "server_" + now + ".log"
+        logger = logging.getLogger("server logger")
+        logger.setLevel(logging.INFO)
+        fh = logging.FileHandler(file_name)
+        formatter = logging.Formatter('%(asctime)s %(message)s')
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
+        return logger
 
     def bind(self,event):
         ip = self.ip_var.get()
@@ -55,7 +65,7 @@ class Server:
 
     def send_message_to_client(self,event):
         self.message = self.serverWidgets.send_client_entry.get('1.0','end')
-        logging.info("Sended message:   {}". format(self.message))
+        self.logger.info("Sended message:   {}". format(self.message))
         self.connection.send(self.message.encode())
     
     def get_message(self,connection):   #her connection icin surekli olarak dinleme yapar
@@ -63,7 +73,7 @@ class Server:
         connection.send(str.encode('Welcome to the Server'))
         while True:
                 self.receivedMessage = self.connection.recv(1024)  #program mesaj gelene kadar burada bekler
-                logging.info("Received message: {}". format(self.receivedMessage))
+                self.logger.info("Received message: {}". format(self.receivedMessage))
                 if not self.receivedMessage:
                     continue
                 else:

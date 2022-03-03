@@ -7,9 +7,7 @@ import datetime
 
 from ..widgets.client_widgets import ClientWidgets
 
-now = datetime.datetime.now().strftime("%x").replace("/",".") 
-log_file = "client_" + now + ".log"
-logging.basicConfig(filename= log_file, level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%I:%M:%S')
+
 
 class Client:
 
@@ -17,7 +15,9 @@ class Client:
         self.ip_var = StringVar()
         self.port_var = StringVar()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.logger = self.setup_logger()
         self.clientWidgets = ClientWidgets(self)
+
 
     def get_connection(self,event):
         ip = self.ip_var.get()
@@ -35,14 +35,14 @@ class Client:
 
     def send_message_to_server(self,event):
         message = self.clientWidgets.send_server_entry.get('1.0','end').encode()
-        logging.info("Sended message:   {}". format(message))
+        self.logger.info("Sended message:   {}". format(message))
         print("Client: sended message -> {}". format(message))
         self.socket.send(message)
 
     def get_message(self):
         while True:
             self.receivedMessage = self.socket.recv(1024)
-            logging.info("Received message: {}". format(self.receivedMessage))
+            self.logger.info("Received message: {}". format(self.receivedMessage))
             if not self.receivedMessage: #empty string gelirse dur
                 continue
             else:
@@ -58,3 +58,14 @@ class Client:
         
     def delete_entry(self,event):
         self.clientWidgets.received_server_entry.delete('1.0', END)
+
+    def setup_logger(self):
+        now = datetime.datetime.now().strftime("%x").replace("/",".") 
+        file_name = "client_" + now + ".log"
+        logger = logging.getLogger("client logger")
+        logger.setLevel(logging.INFO)
+        fh = logging.FileHandler(file_name)
+        formatter = logging.Formatter('%(asctime)s %(message)s')
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
+        return logger
