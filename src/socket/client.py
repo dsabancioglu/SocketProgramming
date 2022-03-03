@@ -6,7 +6,7 @@ import logging
 import datetime
 
 from ..widgets.client_widgets import ClientWidgets
-
+from ..logger.logger import setup_logger
 
 
 class Client:
@@ -15,7 +15,7 @@ class Client:
         self.ip_var = StringVar()
         self.port_var = StringVar()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.logger = self.setup_logger()
+        self.logger = setup_logger("client_")
         self.clientWidgets = ClientWidgets(self)
 
 

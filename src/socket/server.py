@@ -2,12 +2,11 @@
 import threading
 import tkinter as tk
 import socket
-import logging
-import datetime
 
- # logging.basicConfig(level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%I:%M:%S')
+
 
 from ..widgets.server_widgets import ServerWidgets
+from..logger.logger import setup_logger
 
 class Server:     
     def __init__(self):
@@ -17,19 +16,8 @@ class Server:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.max_connection = 5
         self.listen = False
-        self.logger = self.setup_logger()
+        self.logger = setup_logger("server_")
         self.serverWidgets = ServerWidgets(self)
-
-    def setup_logger(self):
-        now = datetime.datetime.now().strftime("%x").replace("/",".") 
-        file_name = "server_" + now + ".log"
-        logger = logging.getLogger("server logger")
-        logger.setLevel(logging.INFO)
-        fh = logging.FileHandler(file_name)
-        formatter = logging.Formatter('%(asctime)s %(message)s')
-        fh.setFormatter(formatter)
-        logger.addHandler(fh)
-        return logger
 
     def bind(self,event):
         ip = self.ip_var.get()
