@@ -4,6 +4,9 @@ from tkinter import *
 import socket
 import logging
 import datetime
+import sys
+
+sys.dont_write_bytecode = True
 
 from ..widgets.client_widgets import ClientWidgets
 from ..logger.logger import setup_logger

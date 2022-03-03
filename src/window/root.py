@@ -1,6 +1,9 @@
 #pylint: skip-file
 from tkinter import *
 import tkinter as tk
+import sys
+
+sys.dont_write_bytecode = True
 
 
 from ..socket.client import Client

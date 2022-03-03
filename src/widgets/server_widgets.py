@@ -2,6 +2,9 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+import sys
+
+sys.dont_write_bytecode = True
 
 
 class ServerWidgets:

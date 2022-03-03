@@ -1,2 +1,6 @@
 2022-03-03 17:26:36,457 Received message: b'Welcome to the Server'
 2022-03-03 17:26:42,463 Sended message:   b'selam ben client\n'
+2022-03-03 17:33:21,821 Received message: b'Welcome to the Server'
+2022-03-03 17:33:24,351 Sended message:   b'gkg\n'
+2022-03-03 17:43:37,672 Received message: b'Welcome to the Server'
+2022-03-03 17:43:44,015 Sended message:   b'client ben\n'

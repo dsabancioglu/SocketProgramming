@@ -2,8 +2,9 @@
 import threading
 import tkinter as tk
 import socket
+import sys
 
-
+sys.dont_write_bytecode = True
 
 from ..widgets.server_widgets import ServerWidgets
 from..logger.logger import setup_logger
@@ -68,11 +69,10 @@ class Server:
                     print("Server: received message (server): {}".format(self.receivedMessage))
                     self.serverWidgets.received_client_entry.insert("end", self.receivedMessage)  
 
-    def close_connection(self,event): #bunun da butonunu ekle
+    def close_connection(self,event):
         self.connection.close()
         self.listen_mode = 0
         self.active = 0
-        #stop thread
         self.serverWidgets.server_status_value.config(text="Stop", foreground="#eb3838")
         print("Server: Connection closed")
     
