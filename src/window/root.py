@@ -13,7 +13,7 @@ class Root:
     def __init__(self):
         self.root = Tk()
         self.root.title("Client Server Communication")
-        self.root.geometry('200x150+80+80')
+        self.root.geometry('200x150+1100+80') #80+80
         self.server_button = tk.Button(self.root, text="Server", command=self.create_server).grid(column=0, row=1, sticky=tk.W, padx=20, pady=5)
         self.client_button = tk.Button(self.root, text="Client", command=self.create_client).grid(column=0, row=2, sticky=tk.W, padx=20, pady=5)
         self.root.mainloop()

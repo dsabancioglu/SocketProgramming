@@ -11,7 +11,7 @@ class ServerWidgets:
     def __init__(self,server):   
         print(  "serverWidgets init")
         self.server_frame = Toplevel()
-        self.server_frame.geometry('500x500+450+300')
+        self.server_frame.geometry('500x500+1000+300') #450+300
         self.server_frame.title("Server")
         self.server_frame.columnconfigure(0, weight=1)
         self.server_frame.columnconfigure(1, weight=1)
@@ -38,11 +38,10 @@ class ServerWidgets:
         self.received_client_entry = tk.Text(self.server_frame ,width=20,height=3) 
         self.received_client_entry.grid(column=0 ,row=6 ,sticky= EW,padx=20,pady=5, columnspan=2)
 
-        #scrollbar - must be fixed
-          # scrollbar = ttk.Scrollbar(server_frame, orient='vertical', command=received_client_entry.yview)
-        # scrollbar.grid(row=6, column=1, sticky=tk.E)
-        # received_client_entry['yscrollcommand'] = scrollbar.set
-        #scrollbar - must be fixed
+        receive_text_scrollbar = ttk.Scrollbar(self.server_frame, orient='vertical', command=self.received_client_entry.yview)
+        receive_text_scrollbar.grid(row=6, column=1, sticky=tk.E, padx=20, ipady=7)
+        # scrollbar.pack(side=RIGHT, fill='y') root'u received_client_entry yap
+        self.received_client_entry['yscrollcommand'] = receive_text_scrollbar.set
 
         self.delete_button_server = tk.Button(self.server_frame, text="DELETE", background="#eb3838", foreground="white")
         self.delete_button_server.grid(column=1, row=7, sticky=E, pady=5, padx=20)
