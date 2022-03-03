@@ -5,8 +5,6 @@ import sys
 
 sys.dont_write_bytecode = True
 
- # logging.basicConfig(level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%I:%M:%S')
-
 def setup_logger(name):
     now = datetime.datetime.now().strftime("%x").replace("/",".") 
     file_name = name + now + ".log"
