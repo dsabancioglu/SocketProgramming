@@ -37,11 +37,10 @@ class Server:
         if(self.listen):
             print('Server: Waiting for a Connection..')
             self.client_count = 0
-            accept_connection_thread = threading.Thread(target=self.accept_connection) #accept connection'i thread olarak calistirdigimiz icin program accept() metodunda bloklanmaz.
+            accept_connection_thread = threading.Thread(target=self.accept_connection) #Since we are running the accept connection as a thread, the program is not blocked in the accept() method
             accept_connection_thread.start()            
 
     def accept_connection(self): 
-        
         while True:
             self.connection, self.address = self.socket.accept() 
             print('Server: Connected to: ' + self.address[0] + ': {}'.format(self.address[1]))
@@ -49,7 +48,7 @@ class Server:
             self.client_count += 1
             print(self.client_count)
             print('Server: Thread Number: {}'.format(self.client_count))
-            get_message_thread = threading.Thread(target=self.get_message, args=(self.connection,)) #her client connection ını ayrı ayrı threadlerde dinlicez
+            get_message_thread = threading.Thread(target=self.get_message, args=(self.connection,)) #listen to each client connection in separate threads
             get_message_thread.start()
 
     def send_message_to_client(self,event):
@@ -57,11 +56,11 @@ class Server:
         self.logger.info("Sended message:   {}". format(self.message.decode().replace("\n","")))
         self.connection.send(self.message)
     
-    def get_message(self,connection):   #her connection icin surekli olarak dinleme yapar
+    def get_message(self,connection):   #listens continuously for every connection
         print("Server: get_message thread created")
         connection.send(str.encode('Welcome to the Server'))
         while True:
-                self.receivedMessage = self.connection.recv(1024)  #program mesaj gelene kadar burada bekler
+                self.receivedMessage = self.connection.recv(1024)  #waits here until the message comes
                 self.logger.info("Received message: {}". format(self.receivedMessage.decode().replace("\n","")))
                 if not self.receivedMessage:
                     continue
@@ -71,8 +70,6 @@ class Server:
 
     def close_connection(self,event):
         self.connection.close()
-        self.listen_mode = 0
-        self.active = 0
         self.serverWidgets.server_status_value.config(text="Stop", foreground="#eb3838")
         print("Server: Connection closed")
     

@@ -2,8 +2,6 @@
 import threading
 from tkinter import *
 import socket
-import logging
-import datetime
 import sys
 
 sys.dont_write_bytecode = True
@@ -30,7 +28,7 @@ class Client:
             self.socket.connect((ip, port))
             print("Client: connection established")
             self.clientWidgets.connection_statement_value.config(text="Connected", foreground="#278c3d")
-            get_message_thread = threading.Thread(target=self.get_message) #her client connection ını ayrı ayrı threadlerde dinlicez
+            get_message_thread = threading.Thread(target=self.get_message) 
             get_message_thread.start()
         except socket.error as msg:
             print("Client:Connection could not be established, error message : {}".format(msg) )
@@ -46,29 +44,14 @@ class Client:
         while True:
             self.receivedMessage = self.socket.recv(1024)
             self.logger.info("Received message: {}". format(self.receivedMessage.decode().replace("\n","")))
-            if not self.receivedMessage: #empty string gelirse dur
+            if not self.receivedMessage: 
                 continue
             else:
                 self.clientWidgets.received_server_entry.insert(1.0,self.receivedMessage)
 
-    def close_connection(self, event): #buton oluştur buna, event alcak
+    def close_connection(self, event): 
         self.socket.close()
-        self.listen_mode = 0
-        self.active = 0
         self.clientWidgets.connection_statement_value.config(text="Not connected", foreground="#eb3838")
-        print("closed")
-        #thread i sonlandır
         
     def delete_entry(self,event):
         self.clientWidgets.received_server_entry.delete('1.0', END)
-
-    def setup_logger(self):
-        now = datetime.datetime.now().strftime("%x").replace("/",".") 
-        file_name = "client_" + now + ".log"
-        logger = logging.getLogger("client logger")
-        logger.setLevel(logging.INFO)
-        fh = logging.FileHandler(file_name)
-        formatter = logging.Formatter('%(asctime)s %(message)s')
-        fh.setFormatter(formatter)
-        logger.addHandler(fh)
-        return logger
