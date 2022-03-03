@@ -53,16 +53,16 @@ class Server:
             get_message_thread.start()
 
     def send_message_to_client(self,event):
-        self.message = self.serverWidgets.send_client_entry.get('1.0','end')
-        self.logger.info("Sended message:   {}". format(self.message))
-        self.connection.send(self.message.encode())
+        self.message = self.serverWidgets.send_client_entry.get('1.0','end').encode()
+        self.logger.info("Sended message:   {}". format(self.message.decode().replace("\n","")))
+        self.connection.send(self.message)
     
     def get_message(self,connection):   #her connection icin surekli olarak dinleme yapar
         print("Server: get_message thread created")
         connection.send(str.encode('Welcome to the Server'))
         while True:
                 self.receivedMessage = self.connection.recv(1024)  #program mesaj gelene kadar burada bekler
-                self.logger.info("Received message: {}". format(self.receivedMessage))
+                self.logger.info("Received message: {}". format(self.receivedMessage.decode().replace("\n","")))
                 if not self.receivedMessage:
                     continue
                 else:

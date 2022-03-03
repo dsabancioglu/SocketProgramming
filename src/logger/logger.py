@@ -11,7 +11,7 @@ def setup_logger(name):
     logger = logging.getLogger(name + "logger")
     logger.setLevel(logging.INFO)
     fh = logging.FileHandler(file_name)
-    formatter = logging.Formatter('%(asctime)s %(message)s','%I:%M:%S:%f')
+    formatter = logging.Formatter('%(asctime)s %(message)s','%I:%M:%S')
     fh.setFormatter(formatter)
     logger.addHandler(fh)
     return logger

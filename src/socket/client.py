@@ -38,14 +38,14 @@ class Client:
 
     def send_message_to_server(self,event):
         message = self.clientWidgets.send_server_entry.get('1.0','end').encode()
-        self.logger.info("Sended message:   {}". format(message))
+        self.logger.info("Sended message:   {}". format(message.decode().replace("\n","")))
         print("Client: sended message -> {}". format(message))
         self.socket.send(message)
 
     def get_message(self):
         while True:
             self.receivedMessage = self.socket.recv(1024)
-            self.logger.info("Received message: {}". format(self.receivedMessage))
+            self.logger.info("Received message: {}". format(self.receivedMessage.decode().replace("\n","")))
             if not self.receivedMessage: #empty string gelirse dur
                 continue
             else:
