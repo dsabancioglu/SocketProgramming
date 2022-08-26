@@ -1,0 +1,7 @@
+src/logger/__pycache__/logger.cpython-36.pyc
+
+src/window/__pycache__/__init__.cpython-36.pyc
+.gitignore
+src/window/__pycache__/root.cpython-36.pyc
+server_03.03.22.log
+client_03.03.22.log
